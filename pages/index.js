@@ -27,7 +27,7 @@ export default function Home( {positionnum, clubsala, topten, salarybyposition})
   );
 };
 
-export const  getStaticProps = async () => {
+export const getServerSideProps = async () => {
   let numbypositions = await Axios.get('https://mls-salaries.herokuapp.com/position');
   let clubsala = await  Axios.get(`https://mls-salaries.herokuapp.com/clubsalaries`)
   let topten = await Axios.get('https://mls-salaries.herokuapp.com/topsalaries')
