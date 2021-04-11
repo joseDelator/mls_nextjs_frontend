@@ -1,65 +1,53 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 
-export default function Home() {
+import Postnum from './componets/Numofpostions'
+import Axios from  'axios'
+import Clubsala from './componets/clubsala'
+import SalaGrowth from './componets/salarygrowth'
+import Topsala from './componets/Topsala'
+import Sala_by_post from './componets/sala_by_position'
+export default function Home( {positionnum, clubsala, topten, salarybyposition}) {
+  console.log(topten)
   return (
-    <div className={styles.container}>
+    <div>
+
+    <h1>MLS Salary Data from   2017</h1>
+    <div  className= 'grid_container'>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Kayla's Shop</title>
+        <link rel="icon" href="/logo512.png" />
       </Head>
+    
+      <Clubsala clubs = {clubsala}/>
+      <Topsala player={topten}/>
+      <Postnum clubs = {positionnum} />
+      <SalaGrowth/>
+      <Sala_by_post clubs={salarybyposition}/>
+      </div>
+      </div>
+  );
+};
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+export const  getStaticProps = async () => {
+  let numbypositions = await Axios.get('https://mls-salaries.herokuapp.com/position');
+  let clubsala = await  Axios.get(`https://mls-salaries.herokuapp.com/clubsalaries`)
+  let topten = await Axios.get('https://mls-salaries.herokuapp.com/topsalaries')
+  let salarybyposition = await Axios.get('https://mls-salaries.herokuapp.com/positionsalariesmean')
+  clubsala = clubsala.data
+  const positionnum = numbypositions.data;
+  topten = topten.data
+  salarybyposition = salarybyposition.data
+  return {
+    props: {
+     positionnum,
+      clubsala,
+      topten,
+      salarybyposition,
+    },
+  };
+};
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
-}
+   
