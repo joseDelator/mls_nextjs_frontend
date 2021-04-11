@@ -1,5 +1,4 @@
 import Head from 'next/head'
-
 import Postnum from './componets/Numofpostions'
 import Axios from  'axios'
 import Clubsala from './componets/clubsala'
@@ -7,7 +6,7 @@ import SalaGrowth from './componets/salarygrowth'
 import Topsala from './componets/Topsala'
 import Sala_by_post from './componets/sala_by_position'
 export default function Home( {positionnum, clubsala, topten, salarybyposition}) {
-  console.log(topten)
+ 
   return (
     <div>
 
@@ -17,7 +16,7 @@ export default function Home( {positionnum, clubsala, topten, salarybyposition})
         <title>Kayla's Shop</title>
         <link rel="icon" href="/logo512.png" />
       </Head>
-    
+
       <Clubsala clubs = {clubsala}/>
       <Topsala player={topten}/>
       <Postnum clubs = {positionnum} />
@@ -50,4 +49,3 @@ export const  getStaticProps = async () => {
 
 
 
-   
