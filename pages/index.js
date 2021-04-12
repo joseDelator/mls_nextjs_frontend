@@ -5,7 +5,7 @@ import Clubsala from './componets/clubsala'
 import SalaGrowth from './componets/salarygrowth'
 import Topsala from './componets/Topsala'
 import Sala_by_post from './componets/sala_by_position'
-export default function Home( {positionnum, clubsala, topten, salarybyposition}) {
+export default function Home( {numbypositions, clubsala, topten, salarybyposition}) {
  
   return (
     <div>
@@ -19,7 +19,7 @@ export default function Home( {positionnum, clubsala, topten, salarybyposition})
 
       <Clubsala clubs = {clubsala}/>
       <Topsala player={topten}/>
-      <Postnum clubs = {positionnum} />
+      <Postnum clubs = {numbypositions} />
       <SalaGrowth/>
       <Sala_by_post clubs={salarybyposition}/>
       </div>
@@ -27,18 +27,18 @@ export default function Home( {positionnum, clubsala, topten, salarybyposition})
   );
 };
 
-export const getServerSideProps = async () => {
-  let numbypositions = await Axios.get('https://mls-salaries.herokuapp.com/position');
-  let clubsala = await  Axios.get(`https://mls-salaries.herokuapp.com/clubsalaries`)
-  let topten = await Axios.get('https://mls-salaries.herokuapp.com/topsalaries')
+export const getStaticProps = async ()  => {
+  let numbypositions =  await Axios.get('https://mls-salaries.herokuapp.com/position');
+  let clubsala = await Axios.get(`https://mls-salaries.herokuapp.com/clubsalaries`)
+  let topten =  await Axios.get('https://mls-salaries.herokuapp.com/topsalaries')
   let salarybyposition = await Axios.get('https://mls-salaries.herokuapp.com/positionsalariesmean')
-  clubsala = clubsala.data
-  const positionnum = numbypositions.data;
-  topten = topten.data
-  salarybyposition = salarybyposition.data
+  clubsala = await clubsala.data
+  numbypositions = await numbypositions.data;
+  topten = await topten.data
+  salarybyposition = await salarybyposition.data
   return {
     props: {
-     positionnum,
+      numbypositions,
       clubsala,
       topten,
       salarybyposition,
