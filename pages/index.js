@@ -13,7 +13,7 @@ export default function Home( {positionnum, clubsala, topten, salarybyposition})
     <h1>MLS Salary Data from   2017</h1>
     <div  className= 'grid_container'>
       <Head>
-        <title>Kayla's Shop</title>
+        <title>MLs Salaries 2017</title>
         <link rel="icon" href="/logo512.png" />
       </Head>
 
